@@ -96,7 +96,6 @@ const insertNewItem = (event) => {
         render();
     }
 }
-
 newItem.addEventListener('keypress', insertNewItem);
 
 render();
