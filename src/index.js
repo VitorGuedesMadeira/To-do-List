@@ -2,7 +2,7 @@ import './style.css';
 import Dynamic from './modules/creatingItems.js'; // eslint-disable-line import/no-cycle
 
 // ------ DATA STRUCTURE ------- //
-export let dataStructure = [];// eslint-disable-line import/no-mutable-exports
+export let dataStructure = [];
 
 const cleanList = () => {
   const toDoList = document.querySelector('.todo-list');
