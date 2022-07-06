@@ -1,5 +1,5 @@
 import trashIcon from './trash-regular-24.png';
-import { dataStructure } from '../index.js';
+import { dataStructure, render } from '../index.js'; // eslint-disable-line import/no-cycle
 
 const toDoList = document.querySelector('.todo-list');
 export default class Dynamic {
@@ -13,44 +13,42 @@ static creatingNewItem = (text, index) => {
   textItem.setAttribute('class', 'input-text');
   textItem.value = text;
   textItem.id = `id_${index}`;
-  const enterImage = document.createElement('p');
   const inputClosure = document.createElement('img');
   inputClosure.setAttribute('class', 'closure-button');
   inputClosure.setAttribute('src', trashIcon);
-  //appendingChild
+  // appendingChild
   toDoList.appendChild(labelItem);
   labelItem.appendChild(inputCheckbox);
   labelItem.appendChild(textItem);
   labelItem.appendChild(inputClosure);
-  //inputClosureButton
+  // inputClosureButton
   inputClosure.addEventListener('click', () => {
     dataStructure.splice(index, 1);
     render();
-    for(let i=0; i<dataStructure.length; i += 1){
-        dataStructure[i].index = i 
-      }
-    localStorage.setItem('listItem', JSON.stringify(dataStructure));
-  });   
-  //line in p texts
-  labelItem.addEventListener('click', () => {
-    let itemId = index;
-    if(inputCheckbox.checked){
-        labelItem.classList.add('show');
-        dataStructure[itemId].completed = true;
-    } else {
-        labelItem.classList.remove('show');
-        dataStructure[itemId].completed = false;
+    for (let i = 0; i < dataStructure.length; i += 1) {
+      dataStructure[i].index = i;
     }
-  })
-  //input editing
-window.addEventListener('input', (e) => {
-    if(e.target.classList.contains('input-text')) {
-        const something = e.target;
-        const thisId = Number(something.id.split("_")[1])
-        dataStructure[thisId].description = e.target.value;
-        localStorage.setItem('listItem', JSON.stringify(dataStructure))
-    };
-  })
+    localStorage.setItem('listItem', JSON.stringify(dataStructure));
+  });
+  // line in p texts
+  labelItem.addEventListener('click', () => {
+    const itemId = index;
+    if (inputCheckbox.checked) {
+      labelItem.classList.add('show');
+      dataStructure[itemId].completed = true;
+    } else {
+      labelItem.classList.remove('show');
+      dataStructure[itemId].completed = false;
+    }
+  });
+  // input editing
+  window.addEventListener('input', (e) => {
+    if (e.target.classList.contains('input-text')) {
+      const something = e.target;
+      const thisId = Number(something.id.split('_')[1]);
+      dataStructure[thisId].description = e.target.value;
+      localStorage.setItem('listItem', JSON.stringify(dataStructure));
+    }
+  });
 };
-
 }
