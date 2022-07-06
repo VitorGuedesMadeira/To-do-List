@@ -53,6 +53,7 @@ body {
   height: 100%;
   border: none;
   background-color: rgb(218, 214, 195);
+  font-style: italic;
 }
 
 .todo-new-item input:focus {
