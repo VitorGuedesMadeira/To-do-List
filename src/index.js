@@ -1,41 +1,25 @@
 import './style.css';
-import Dynamic from './modules/creatingItems.js'; // eslint-disable-line import/no-cycle
+import Dynamic from './modules/creatingItems.js';
+import {
+  cleanList, clearAll, selectAll, clickPlus, newItem, dataStructure
+} from './modules/variables.js';
 
 // ------ DATA STRUCTURE ------- //
-export let dataStructure = [];
 
-const cleanList = () => {
-  const toDoList = document.querySelector('.todo-list');
-  while (toDoList.firstChild) {
-    toDoList.removeChild(toDoList.lastChild);
-  }
-};
+cleanList();
 
-export const render = () => {
-  cleanList();
-  for (let i = 0; i < dataStructure.length; i += 1) {
-    Dynamic.creatingNewItem(dataStructure[i].description, i);
-  }
-};
-
-const clearAll = document.querySelector('.todo-clear-all-completed');
 clearAll.addEventListener('click', () => {
   dataStructure = dataStructure.filter((item) => !item.completed);
-  render();
+  Dynamic.render();
   localStorage.setItem('listItem', JSON.stringify(dataStructure));
 });
 
-// ------------- delete ALL ----------------//
-const selectAll = document.querySelector('.select-all');
 selectAll.addEventListener('click', () => {
   dataStructure = [];
   localStorage.setItem('listItem', JSON.stringify(dataStructure));
-  render();
+  Dynamic.render();
 });
 
-// ------------- Add new item --------------//
-const clickPlus = document.querySelector('.image-plus');
-const newItem = document.getElementById('newItem');
 const insertNewItem = (event) => {
   const tecla = event.key;
   const text = event.target.value;
@@ -48,10 +32,11 @@ const insertNewItem = (event) => {
       },
     );
     newItem.value = '';
-    render();
+    Dynamic.render();
     localStorage.setItem('listItem', JSON.stringify(dataStructure));
   }
 };
+
 newItem.addEventListener('keypress', insertNewItem);
 
 clickPlus.addEventListener('click', () => {
@@ -64,11 +49,11 @@ clickPlus.addEventListener('click', () => {
     },
   );
   newItem.value = '';
-  render();
+  Dynamic.render();
   localStorage.setItem('listItem', JSON.stringify(dataStructure));
 });
-// ------------- Local Storage --------------//
-window.addEventListener('load', () => {
+
+window.addEventListener('load', () => { // LOCAL STORAGE
   if (localStorage.getItem('listItem')) {
     dataStructure.push(...JSON.parse(localStorage.getItem('listItem')));
   }
@@ -78,4 +63,4 @@ window.addEventListener('load', () => {
   }
 });
 
-render();
+Dynamic.render();

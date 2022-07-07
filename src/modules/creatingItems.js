@@ -1,7 +1,7 @@
 import trashIcon from './trash-regular-24.png';
-import { dataStructure, render } from '../index.js'; // eslint-disable-line import/no-cycle
+//import { dataStructure } from '../index.js';
+import { toDoList, cleanList, dataStructure } from './variables.js';
 
-const toDoList = document.querySelector('.todo-list');
 export default class Dynamic {
 static creatingNewItem = (text, index) => {
   const labelItem = document.createElement('label');
@@ -24,7 +24,7 @@ static creatingNewItem = (text, index) => {
   // inputClosureButton
   inputClosure.addEventListener('click', () => {
     dataStructure.splice(index, 1);
-    render();
+    Dynamic.render();
     for (let i = 0; i < dataStructure.length; i += 1) {
       dataStructure[i].index = i;
     }
@@ -50,5 +50,12 @@ static creatingNewItem = (text, index) => {
       localStorage.setItem('listItem', JSON.stringify(dataStructure));
     }
   });
+};
+
+static render = () => {
+  cleanList();
+  for (let i = 0; i < dataStructure.length; i += 1) {
+    Dynamic.creatingNewItem(dataStructure[i].description, i);
+  }
 };
 }
