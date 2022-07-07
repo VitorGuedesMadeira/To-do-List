@@ -30,6 +30,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  animation: toDoList 1s;
 }
 
 .todo-title {
@@ -153,4 +154,16 @@ input[type='checkbox']:checked + .input-text {
 
 .image-plus:hover {
   filter: invert(100);
+}
+
+@keyframes toDoList {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -60px, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
 }
