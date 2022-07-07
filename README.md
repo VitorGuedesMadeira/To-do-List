@@ -1,6 +1,6 @@
 ![](https://img.shields.io/badge/Microverse-blueviolet)
-# AwesomeBooks-Project:
-- To-do List project
+# To-do List:
+- To-do List project - Microverse
 
 ## Acces link
 

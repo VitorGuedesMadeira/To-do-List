@@ -1,71 +1,8 @@
 import './style.css';
-// import Icon from './icon.png';
-/*
-function component() {
-    const element = document.createElement('div');
+import Dynamic from './modules/creatingItems.js'; // eslint-disable-line import/no-cycle
 
-    // Lodash, now imported by this script
-    element.innerHTML = _.join(['Hello', 'webpack'], ' ');
-    element.classList.add('hello');
-
-    // Add the image to our existing div.
-    const myIcon = new Image();
-    //myIcon.src = Icon;
-
-    element.appendChild(myIcon);
-
-    //return element;
-  }
-
-  document.body.appendChild(component()); */
-
-/*
-  <label class="todo-list-label">
-  <input type="checkbox">
-  <p>NEW ITEM</p>
-  <input type="button" value="X">
-</label> */
-
-const dataStructure = [
-  {
-    description: 'Vitor',
-    completed: false,
-    index: 0,
-  },
-  {
-    description: 'Karla',
-    completed: false,
-    index: 1,
-  },
-  {
-    description: 'Nunes',
-    completed: false,
-    index: 2,
-  },
-  {
-    description: 'Alejandro',
-    completed: false,
-    index: 3,
-  },
-];
-
-const toDoList = document.querySelector('.todo-list');
-const creatingNewItem = (text) => {
-  const labelItem = document.createElement('label');
-  labelItem.classList.add('todo-list-label');
-  const inputCheckbox = document.createElement('input');
-  inputCheckbox.setAttribute('type', 'checkbox');
-  const textItem = document.createElement('p');
-  textItem.textContent = text;
-  const inputClosure = document.createElement('input');
-  inputClosure.setAttribute('type', 'button');
-  inputClosure.setAttribute('value', 'X');
-
-  toDoList.appendChild(labelItem);
-  labelItem.appendChild(inputCheckbox);
-  labelItem.appendChild(textItem);
-  labelItem.appendChild(inputClosure);
-};
+// ------ DATA STRUCTURE ------- //
+export let dataStructure = [];
 
 const cleanList = () => {
   const toDoList = document.querySelector('.todo-list');
@@ -74,26 +11,71 @@ const cleanList = () => {
   }
 };
 
-const render = () => {
+export const render = () => {
   cleanList();
-  dataStructure.forEach((item) => creatingNewItem(item.description));
+  for (let i = 0; i < dataStructure.length; i += 1) {
+    Dynamic.creatingNewItem(dataStructure[i].description, i);
+  }
 };
 
-const newItem = document.getElementById('newItem');
+const clearAll = document.querySelector('.todo-clear-all-completed');
+clearAll.addEventListener('click', () => {
+  dataStructure = dataStructure.filter((item) => !item.completed);
+  render();
+  localStorage.setItem('listItem', JSON.stringify(dataStructure));
+});
 
+// ------------- delete ALL ----------------//
+const selectAll = document.querySelector('.select-all');
+selectAll.addEventListener('click', () => {
+  dataStructure = [];
+  localStorage.setItem('listItem', JSON.stringify(dataStructure));
+  render();
+});
+
+// ------------- Add new item --------------//
+const clickPlus = document.querySelector('.image-plus');
+const newItem = document.getElementById('newItem');
 const insertNewItem = (event) => {
   const tecla = event.key;
   const text = event.target.value;
   if (tecla === 'Enter') {
-    dataStructure.push({
-      description: text,
-      completed: false,
-      index: dataStructure.length,
-    });
+    dataStructure.push(
+      {
+        description: text,
+        completed: false,
+        index: dataStructure.length,
+      },
+    );
     newItem.value = '';
     render();
+    localStorage.setItem('listItem', JSON.stringify(dataStructure));
   }
 };
 newItem.addEventListener('keypress', insertNewItem);
+
+clickPlus.addEventListener('click', () => {
+  const { value } = newItem;
+  dataStructure.push(
+    {
+      description: value,
+      completed: false,
+      index: dataStructure.length,
+    },
+  );
+  newItem.value = '';
+  render();
+  localStorage.setItem('listItem', JSON.stringify(dataStructure));
+});
+// ------------- Local Storage --------------//
+window.addEventListener('load', () => {
+  if (localStorage.getItem('listItem')) {
+    dataStructure.push(...JSON.parse(localStorage.getItem('listItem')));
+  }
+  for (let i = 0; i < dataStructure.length; i += 1) {
+    const newObj = dataStructure[i];
+    Dynamic.creatingNewItem(newObj.description, i);
+  }
+});
 
 render();
