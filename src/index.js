@@ -2,13 +2,12 @@
 import './style.css';
 import Dynamic from './modules/creatingItems.js';
 import AddItem, { newItem } from './modules/statusupdate.js';
-import * as variables from './modules/variables.js'; 
+import * as variables from './modules/variables.js';
 
 export let dataStructure = []; // eslint-disable-line import/no-mutable-exports
 // I need this one to be LET and not a CONST. It's a different approach.
 
-//variables.cleantList();
-
+// variables.cleantList();
 
 export const render = () => {
   cleanList();
