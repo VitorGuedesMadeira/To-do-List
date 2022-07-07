@@ -40,7 +40,7 @@ static creatingNewItem = (text, completed, index) => {
       DataClass.dataStructure[index].completed = true;
       localStorage.setItem('listItem', JSON.stringify(DataClass.dataStructure));
     } else {
-      labelItem.style.backgroundColor = 'rgba(202, 189, 74, 0.505)';
+      labelItem.style.backgroundColor = 'rgba(202, 189, 74, 0.305)';
       DataClass.dataStructure[index].completed = false;
       localStorage.setItem('listItem', JSON.stringify(DataClass.dataStructure));
     }

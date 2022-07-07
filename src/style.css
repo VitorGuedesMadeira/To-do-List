@@ -81,7 +81,7 @@ body {
   justify-content: space-between;
   border-top: 1px solid grey;
   border-radius: 50px;
-  background-color: rgba(202, 189, 74, 0.505);
+  background-color: rgba(202, 189, 74, 0.305);
 }
 
 .todo-list-label p {
