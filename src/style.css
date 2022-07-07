@@ -145,3 +145,10 @@ body {
 .image-plus:hover {
   filter: invert(100);
 }
+
+@media all and (max-width: 768px) {
+  .todo {
+    min-width: 324px;
+    width: 324px;
+  }
+}
