@@ -6,6 +6,9 @@ static creatingNewItem = (text, completed, index) => {
   const labelItem = document.createElement('label');
   labelItem.classList.add('todo-list-label');
   labelItem.id = index;
+  if(completed){
+    labelItem.style.backgroundColor = 'rgb(190, 255, 199)';
+  }
   const inputCheckbox = document.createElement('input');
   inputCheckbox.setAttribute('type', 'checkbox');
   inputCheckbox.checked = completed;
@@ -33,9 +36,11 @@ static creatingNewItem = (text, completed, index) => {
   // line in p texts
   labelItem.addEventListener('click', () => {
     if (inputCheckbox.checked) {
+      labelItem.style.backgroundColor = 'rgb(190, 255, 199)';
       DataClass.dataStructure[index].completed = true;
       localStorage.setItem('listItem', JSON.stringify(DataClass.dataStructure));
     } else {
+      labelItem.style.backgroundColor = "transparent";
       DataClass.dataStructure[index].completed = false;
       localStorage.setItem('listItem', JSON.stringify(DataClass.dataStructure));
     }

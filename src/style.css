@@ -80,10 +80,6 @@ body {
   background-color: rgb(221, 221, 221);
 }
 
-.todo-list-label.show {
-  background-color: rgb(190, 255, 199);
-}
-
 .input-text {
   border: none;
   background-color: transparent;
