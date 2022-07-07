@@ -1,8 +1,10 @@
+/* eslint-disable import/no-cycle */
 import './style.css';
-import Dynamic from './modules/creatingItems.js'; // eslint-disable-line import/no-cycle
+import Dynamic from './modules/creatingItems.js';
+import AddItem, { newItem } from './modules/statusupdate.js';
 
-// ------ DATA STRUCTURE ------- //
-export let dataStructure = [];
+export let dataStructure = []; // eslint-disable-line import/no-mutable-exports
+// I need this one to be LET and not a CONST. It's a different approach.
 
 const cleanList = () => {
   const toDoList = document.querySelector('.todo-list');
@@ -25,7 +27,6 @@ clearAll.addEventListener('click', () => {
   localStorage.setItem('listItem', JSON.stringify(dataStructure));
 });
 
-// ------------- delete ALL ----------------//
 const selectAll = document.querySelector('.select-all');
 selectAll.addEventListener('click', () => {
   dataStructure = [];
@@ -33,27 +34,8 @@ selectAll.addEventListener('click', () => {
   render();
 });
 
-// ------------- Add new item --------------//
+newItem.addEventListener('keypress', AddItem.insertNewItem);
 const clickPlus = document.querySelector('.image-plus');
-const newItem = document.getElementById('newItem');
-const insertNewItem = (event) => {
-  const tecla = event.key;
-  const text = event.target.value;
-  if (tecla === 'Enter') {
-    dataStructure.push(
-      {
-        description: text,
-        completed: false,
-        index: dataStructure.length,
-      },
-    );
-    newItem.value = '';
-    render();
-    localStorage.setItem('listItem', JSON.stringify(dataStructure));
-  }
-};
-newItem.addEventListener('keypress', insertNewItem);
-
 clickPlus.addEventListener('click', () => {
   const { value } = newItem;
   dataStructure.push(
