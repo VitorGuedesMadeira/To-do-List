@@ -1,4 +1,4 @@
-import { dataStructure, render } from '../index.js'; // eslint-disable-line import/no-cycle
+import { dataStructure, render } from '../index.js';
 
 export const newItem = document.getElementById('newItem');
 export default class AddItem {

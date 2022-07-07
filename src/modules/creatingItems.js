@@ -1,7 +1,7 @@
 import trashIcon from './trash-regular-24.png';
-import { dataStructure, render } from '../index.js'; // eslint-disable-line import/no-cycle
+import { dataStructure, render } from '../index.js';
 
-const toDoList = document.querySelector('.todo-list');
+export const toDoList = document.querySelector('.todo-list');
 export default class Dynamic {
 static creatingNewItem = (text, index) => {
   const labelItem = document.createElement('label');
@@ -9,6 +9,7 @@ static creatingNewItem = (text, index) => {
   labelItem.id = index;
   const inputCheckbox = document.createElement('input');
   inputCheckbox.setAttribute('type', 'checkbox');
+
   const textItem = document.createElement('input');
   textItem.setAttribute('class', 'input-text');
   textItem.value = text;
@@ -30,15 +31,18 @@ static creatingNewItem = (text, index) => {
     }
     localStorage.setItem('listItem', JSON.stringify(dataStructure));
   });
+
   // line in p texts
   labelItem.addEventListener('click', () => {
     const itemId = index;
     if (inputCheckbox.checked) {
       labelItem.classList.add('show');
       dataStructure[itemId].completed = true;
+      localStorage.setItem('listItem', JSON.stringify(dataStructure));
     } else {
       labelItem.classList.remove('show');
       dataStructure[itemId].completed = false;
+      localStorage.setItem('listItem', JSON.stringify(dataStructure));
     }
   });
   // input editing
