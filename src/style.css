@@ -146,6 +146,18 @@ body {
   filter: invert(100);
 }
 
+@keyframes toDoList {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -60px, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
 @media all and (max-width: 768px) {
   .todo {
     min-width: 324px;
