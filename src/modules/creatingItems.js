@@ -1,14 +1,17 @@
 import trashIcon from './trash-regular-24.png';
-import { dataStructure, render } from '../index.js'; // eslint-disable-line import/no-cycle
+import DataClass, { toDoList, cleanList } from './variables.js';
 
-const toDoList = document.querySelector('.todo-list');
 export default class Dynamic {
-static creatingNewItem = (text, index) => {
+static creatingNewItem = (text, completed, index) => {
   const labelItem = document.createElement('label');
   labelItem.classList.add('todo-list-label');
   labelItem.id = index;
+  if (completed) {
+    labelItem.style.backgroundColor = 'rgb(190, 255, 199)';
+  }
   const inputCheckbox = document.createElement('input');
   inputCheckbox.setAttribute('type', 'checkbox');
+  inputCheckbox.checked = completed;
   const textItem = document.createElement('input');
   textItem.setAttribute('class', 'input-text');
   textItem.value = text;
@@ -23,22 +26,23 @@ static creatingNewItem = (text, index) => {
   labelItem.appendChild(inputClosure);
   // inputClosureButton
   inputClosure.addEventListener('click', () => {
-    dataStructure.splice(index, 1);
-    render();
-    for (let i = 0; i < dataStructure.length; i += 1) {
-      dataStructure[i].index = i;
+    DataClass.dataStructure.splice(index, 1);
+    Dynamic.render();
+    for (let i = 0; i < DataClass.dataStructure.length; i += 1) {
+      DataClass.dataStructure[i].index = i;
     }
-    localStorage.setItem('listItem', JSON.stringify(dataStructure));
+    localStorage.setItem('listItem', JSON.stringify(DataClass.dataStructure));
   });
   // line in p texts
   labelItem.addEventListener('click', () => {
-    const itemId = index;
     if (inputCheckbox.checked) {
-      labelItem.classList.add('show');
-      dataStructure[itemId].completed = true;
+      labelItem.style.backgroundColor = 'rgb(190, 255, 199)';
+      DataClass.dataStructure[index].completed = true;
+      localStorage.setItem('listItem', JSON.stringify(DataClass.dataStructure));
     } else {
-      labelItem.classList.remove('show');
-      dataStructure[itemId].completed = false;
+      labelItem.style.backgroundColor = 'rgba(202, 189, 74, 0.305)';
+      DataClass.dataStructure[index].completed = false;
+      localStorage.setItem('listItem', JSON.stringify(DataClass.dataStructure));
     }
   });
   // input editing
@@ -46,9 +50,17 @@ static creatingNewItem = (text, index) => {
     if (e.target.classList.contains('input-text')) {
       const something = e.target;
       const thisId = Number(something.id.split('_')[1]);
-      dataStructure[thisId].description = e.target.value;
-      localStorage.setItem('listItem', JSON.stringify(dataStructure));
+      DataClass.dataStructure[thisId].description = e.target.value;
+      localStorage.setItem('listItem', JSON.stringify(DataClass.dataStructure));
     }
   });
+};
+
+static render = () => {
+  cleanList();
+  const { dataStructure } = DataClass;
+  for (let i = 0; i < DataClass.dataStructure.length; i += 1) {
+    Dynamic.creatingNewItem(dataStructure[i].description, dataStructure[i].completed, i);
+  }
 };
 }

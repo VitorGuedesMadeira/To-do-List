@@ -16,15 +16,21 @@ body {
   background-image: url(pexels-content-pixie-2736499.jpg);
   background-size: cover;
   background-repeat: no-repeat;
+  backdrop-filter: blur(2px);
 }
 
 .todo {
   width: 500px;
   min-width: 375px;
-  background-color: lightgray;
+  background-color: rgba(211, 211, 211, 0.7);
   box-shadow: 5px 5px 10px rgb(0, 0, 0, 0.5);
-  border-radius: 10px;
+  border-radius: 15px;
   overflow: hidden;
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  animation: toDoList 1s;
 }
 
 .todo-title {
@@ -33,6 +39,7 @@ body {
   justify-content: space-between;
   background-color: rgb(188, 177, 112);
   padding: 15px;
+  border-radius: 15px;
 }
 
 .todo-title a {
@@ -44,7 +51,9 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-top: 1px solid grey;
+  border: 1px solid grey;
+  border-radius: 15px;
+  overflow: hidden;
 }
 
 .todo-new-item input {
@@ -61,7 +70,9 @@ body {
 }
 
 .todo-list {
-  background-color: rgb(210, 209, 165);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .todo-list-label {
@@ -70,6 +81,8 @@ body {
   align-items: center;
   justify-content: space-between;
   border-top: 1px solid grey;
+  border-radius: 50px;
+  background-color: rgba(202, 189, 74, 0.305);
 }
 
 .todo-list-label p {
@@ -78,10 +91,6 @@ body {
 
 .todo-list-label:hover {
   background-color: rgb(221, 221, 221);
-}
-
-.todo-list-label.show {
-  background-color: rgb(190, 255, 199);
 }
 
 .input-text {
@@ -93,7 +102,7 @@ body {
   width: 85%;
 }
 
-.todo-list-label.show .input-text {
+input[type='checkbox']:checked + .input-text {
   text-decoration: line-through;
 }
 
@@ -103,6 +112,7 @@ body {
   text-align: center;
   border-top: 1px solid grey;
   cursor: pointer;
+  border-radius: 15px;
 }
 
 .todo-clear-all-completed:hover {
