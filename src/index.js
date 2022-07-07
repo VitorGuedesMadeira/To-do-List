@@ -1,59 +1,64 @@
-/* eslint-disable import/no-cycle */
 import './style.css';
 import Dynamic from './modules/creatingItems.js';
-import AddItem, { newItem } from './modules/statusupdate.js';
-import * as variables from './modules/variables.js';
+import DataClass, {
+  cleanList, clearAll, selectAll, clickPlus, newItem,
+} from './modules/variables.js';
 
-export let dataStructure = []; // eslint-disable-line import/no-mutable-exports
-// I need this one to be LET and not a CONST. It's a different approach.
+cleanList();
 
-// variables.cleantList();
+clearAll.addEventListener('click', () => {
+  DataClass.dataStructure = DataClass.dataStructure.filter((item) => !item.completed);
+  Dynamic.render();
+  localStorage.setItem('listItem', JSON.stringify(DataClass.dataStructure));
+});
 
-export const render = () => {
-  cleanList();
-  for (let i = 0; i < dataStructure.length; i += 1) {
-    Dynamic.creatingNewItem(dataStructure[i].description, i);
+selectAll.addEventListener('click', () => {
+  DataClass.dataStructure = [];
+  localStorage.setItem('listItem', JSON.stringify(DataClass.dataStructure));
+  Dynamic.render();
+});
+///
+const insertNewItem = (event) => {
+  const tecla = event.key;
+  const text = event.target.value;
+  if (tecla === 'Enter') {
+    DataClass.dataStructure.push(
+      {
+        description: text,
+        completed: false,
+        index: DataClass.dataStructure.length,
+      },
+    );
+    newItem.value = '';
+    Dynamic.render();
+    localStorage.setItem('listItem', JSON.stringify(DataClass.dataStructure));
   }
 };
 
-const clearAll = document.querySelector('.todo-clear-all-completed');
-clearAll.addEventListener('click', () => {
-  dataStructure = dataStructure.filter((item) => !item.completed);
-  render();
-  localStorage.setItem('listItem', JSON.stringify(dataStructure));
-});
+newItem.addEventListener('keypress', insertNewItem);
 
-const selectAll = document.querySelector('.select-all');
-selectAll.addEventListener('click', () => {
-  dataStructure = [];
-  localStorage.setItem('listItem', JSON.stringify(dataStructure));
-  render();
-});
-
-newItem.addEventListener('keypress', AddItem.insertNewItem);
-const clickPlus = document.querySelector('.image-plus');
 clickPlus.addEventListener('click', () => {
   const { value } = newItem;
-  dataStructure.push(
+  DataClass.dataStructure.push(
     {
       description: value,
       completed: false,
-      index: dataStructure.length,
+      index: DataClass.dataStructure.length,
     },
   );
   newItem.value = '';
-  render();
-  localStorage.setItem('listItem', JSON.stringify(dataStructure));
+  Dynamic.render();
+  localStorage.setItem('listItem', JSON.stringify(DataClass.dataStructure));
 });
-// ------------- Local Storage --------------//
-window.addEventListener('load', () => {
+
+window.addEventListener('load', () => { // LOCAL STORAGE
   if (localStorage.getItem('listItem')) {
-    dataStructure.push(...JSON.parse(localStorage.getItem('listItem')));
+    DataClass.dataStructure.push(...JSON.parse(localStorage.getItem('listItem')));
   }
-  for (let i = 0; i < dataStructure.length; i += 1) {
-    const newObj = dataStructure[i];
-    Dynamic.creatingNewItem(newObj.description, i);
+  for (let i = 0; i < DataClass.dataStructure.length; i += 1) {
+    const newObj = DataClass.dataStructure[i];
+    Dynamic.creatingNewItem(newObj.description, newObj.completed, i);
   }
 });
 
-render();
+Dynamic.render();

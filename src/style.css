@@ -93,7 +93,7 @@ body {
   width: 85%;
 }
 
-.todo-list-label.show .input-text {
+input[type='checkbox']:checked + .input-text {
   text-decoration: line-through;
 }
 
