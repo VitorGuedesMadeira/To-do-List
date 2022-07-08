@@ -19,6 +19,7 @@ body {
   background-size: cover, 100%;
   background-position: center, center;
   background-repeat: no-repeat, no-repeat;
+  background-attachment: fixed;
 }
 
 .todo {
