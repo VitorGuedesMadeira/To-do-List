@@ -1,50 +1,60 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik+Moonrocks&display=swap');
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
 body {
-  background-color: rgb(161, 161, 161);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   min-height: 100vh;
   max-height: 100%;
-  background-image: url(pexels-content-pixie-2736499.jpg);
-  background-size: cover;
-  background-repeat: no-repeat;
-  backdrop-filter: blur(2px);
+  background-image:
+    radial-gradient(transparent, black),
+    url(pexels-felix-mittermeier-957040.jpg);
+  background-size: cover, 100%;
+  background-position: center, center;
+  background-repeat: no-repeat, no-repeat;
 }
 
 .todo {
+  border: 1px solid rgba(255, 255, 255, 0.2);
   width: 500px;
   min-width: 375px;
-  background-color: rgba(211, 211, 211, 0.7);
-  box-shadow: 5px 5px 10px rgb(0, 0, 0, 0.5);
+  background-image: radial-gradient(rgba(98, 22, 68, 0.301), rgba(168, 152, 223, 0.6));
+  box-shadow:
+    0 0 5px white,
+    0 0 12px white,
+    0 0 20px rgb(99, 11, 140),
+    0 0 29px rgb(99, 11, 140);
   border-radius: 15px;
   overflow: hidden;
   padding: 25px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
   animation: toDoList 1s;
+  gap: 10px;
 }
 
 .todo-title {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: rgb(188, 177, 112);
+  background-color: rgba(36, 5, 122, 0.8);
   padding: 15px;
   border-radius: 15px;
+  box-shadow: 0 0 15px 3px rgba(0, 0, 0, 0.3);
+  font-family: 'Rubik Moonrocks', sans-serif;
 }
 
 .todo-title a {
   text-decoration: none;
-  color: black;
+  color: white;
+  font-family: 'Rubik Moonrocks', sans-serif;
 }
 
 .todo-new-item {
@@ -54,6 +64,7 @@ body {
   border: 1px solid grey;
   border-radius: 15px;
   overflow: hidden;
+  box-shadow: 0 0 15px 3px rgba(0, 0, 0, 0.3);
 }
 
 .todo-new-item input {
@@ -61,7 +72,7 @@ body {
   width: 100%;
   height: 100%;
   border: none;
-  background-color: rgb(218, 214, 195);
+  background-color: rgb(202, 195, 218);
   font-style: italic;
 }
 
@@ -82,8 +93,9 @@ body {
   justify-content: space-between;
   border-top: 1px solid grey;
   border-radius: 50px;
-  background-color: rgba(202, 189, 74, 0.305);
+  background-image: linear-gradient(to top, rgb(111, 51, 149, 0.3), rgb(69, 9, 138, 0.5));
   gap: 10px;
+  box-shadow: 0 0 15px 3px rgba(0, 0, 0, 0.3);
 }
 
 .todo-list-label p {
@@ -101,6 +113,8 @@ body {
   outline: none;
   height: 100%;
   width: 100%;
+  font-family: sans-serif;
+  font-weight: 900;
 }
 
 input[type='checkbox']:checked + .input-text {
@@ -108,12 +122,16 @@ input[type='checkbox']:checked + .input-text {
 }
 
 .todo-clear-all-completed {
-  background-color: rgb(188, 177, 112);
+  background-color: rgba(105, 29, 110, 0.8);
   padding: 15px;
   text-align: center;
   border-top: 1px solid grey;
   cursor: pointer;
   border-radius: 15px;
+  box-shadow: 0 0 15px 3px rgba(0, 0, 0, 0.3);
+  color: white;
+  font-family: 'Rubik Moonrocks', sans-serif;
+  font-size: 1.5em;
 }
 
 .todo-clear-all-completed:hover {
@@ -122,11 +140,11 @@ input[type='checkbox']:checked + .input-text {
 
 .closure-button {
   cursor: pointer;
-  filter: invert(50%);
+  filter: invert(100%);
 }
 
 .closure-button:hover {
-  filter: invert(100%);
+  filter: invert(0%);
 }
 
 .enter-icon {
@@ -136,10 +154,13 @@ input[type='checkbox']:checked + .input-text {
 
 .select-all {
   cursor: pointer;
+  filter: invert(100%);
+  font-family: sans-serif;
+  font-weight: 900;
 }
 
 .select-all:hover {
-  filter: invert(100%);
+  filter: invert(0%);
 }
 
 .image-plus {
@@ -150,11 +171,12 @@ input[type='checkbox']:checked + .input-text {
   width: 60px;
   cursor: pointer;
   border-radius: 15px;
-  filter: invert(50%);
+  filter: invert(100%);
+  font-family: 'Rubik Moonrocks', sans-serif;
 }
 
 .image-plus:hover {
-  filter: invert(100);
+  filter: invert(0%);
 }
 
 @keyframes toDoList {
