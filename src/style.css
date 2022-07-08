@@ -193,6 +193,10 @@ input[type='checkbox']:checked + .input-text {
 }
 
 @media all and (max-width: 768px) {
+  body {
+    background-size: cover, cover;
+  }
+  
   .todo {
     min-width: 324px;
     width: 324px;
