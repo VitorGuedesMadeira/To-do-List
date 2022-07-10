@@ -4,7 +4,7 @@
 
 ## Acces link
 
-> https://vitorguedesmadeira.github.io/To-do-List/
+> https://vitorguedesmadeira.github.io/To-do-List/dist/
 
 ## Built With
 
