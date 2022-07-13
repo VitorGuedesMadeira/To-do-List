@@ -1,41 +1,37 @@
 import './style.css';
 import Dynamic from './modules/creatingItems.js';
 import { insertNewItem } from './modules/insertNewItem.js';
+import { setLocalStorage } from './modules/setLocalStorage';
+import { clearAllSelected } from './modules/clearAllSelected';
+import { deleteAll } from './modules/deleteAll';
+import { render } from './modules/render';
 import DataClass, {
   cleanList, clearAll, selectAll, clickPlus, newItem,
 } from './modules/variables.js';
-import { render } from './modules/render';
-import { setLocalStorage } from './modules/setLocalStorage';
 
 cleanList();
 
 clearAll.addEventListener('click', () => {
-  DataClass.dataStructure = DataClass.dataStructure.filter((item) => !item.completed);
+  clearAllSelected();
   render();
   setLocalStorage();
 });
 
 selectAll.addEventListener('click', () => {
-  DataClass.dataStructure = [];
+  deleteAll();
   setLocalStorage();
   render();
 });
 
 clickPlus.addEventListener('click', () => {
   const { value } = newItem;
-  DataClass.dataStructure.push(
-    {
-      description: value,
-      completed: false,
-      index: DataClass.dataStructure.length,
-    },
-  );
+  insertNewItem(value);
   newItem.value = '';
   render();
   setLocalStorage();
 });
 
-newItem.addEventListener('keypress', () => {
+newItem.addEventListener('keypress', (event) => {
   const tecla = event.key;
   const text = event.target.value;
   if (tecla === 'Enter') {
