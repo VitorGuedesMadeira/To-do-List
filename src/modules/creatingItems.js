@@ -1,5 +1,10 @@
-import trashIcon from './trash-regular-24.png';
-import DataClass, { toDoList, cleanList } from './variables.js';
+import { render } from './render';
+import { setLocalStorage } from './setLocalStorage';
+import { toDoList } from './variables.js';
+import { editingText } from './editingText';
+import { strikethroughLines } from './strikethroughLines';
+import { closingBtn } from './closingBtn';
+import trashIcon from './icons/trash-regular-24.png';
 
 export default class Dynamic {
 static creatingNewItem = (text, completed, index) => {
@@ -26,41 +31,23 @@ static creatingNewItem = (text, completed, index) => {
   labelItem.appendChild(inputClosure);
   // inputClosureButton
   inputClosure.addEventListener('click', () => {
-    DataClass.dataStructure.splice(index, 1);
-    Dynamic.render();
-    for (let i = 0; i < DataClass.dataStructure.length; i += 1) {
-      DataClass.dataStructure[i].index = i;
-    }
-    localStorage.setItem('listItem', JSON.stringify(DataClass.dataStructure));
+    closingBtn(index);
+    render();
+    setLocalStorage();
   });
-  // line in p texts
+  // Strikethrough lines in texts
   labelItem.addEventListener('click', () => {
-    if (inputCheckbox.checked) {
-      labelItem.style.backgroundColor = 'rgb(190, 255, 199)';
-      DataClass.dataStructure[index].completed = true;
-      localStorage.setItem('listItem', JSON.stringify(DataClass.dataStructure));
-    } else {
-      labelItem.style.backgroundColor = 'rgba(202, 189, 74, 0.305)';
-      DataClass.dataStructure[index].completed = false;
-      localStorage.setItem('listItem', JSON.stringify(DataClass.dataStructure));
-    }
+    strikethroughLines(labelItem, inputCheckbox, index);
   });
-  // input editing
+  // Editing input of list item
   window.addEventListener('input', (e) => {
     if (e.target.classList.contains('input-text')) {
-      const something = e.target;
-      const thisId = Number(something.id.split('_')[1]);
-      DataClass.dataStructure[thisId].description = e.target.value;
-      localStorage.setItem('listItem', JSON.stringify(DataClass.dataStructure));
+      const inputText = e.target;
+      const inputId = Number(inputText.id.split('_')[1]);
+      editingText(inputText, inputId);
+      setLocalStorage();
     }
   });
 };
 
-static render = () => {
-  cleanList();
-  const { dataStructure } = DataClass;
-  for (let i = 0; i < DataClass.dataStructure.length; i += 1) {
-    Dynamic.creatingNewItem(dataStructure[i].description, dataStructure[i].completed, i);
-  }
-};
 }
