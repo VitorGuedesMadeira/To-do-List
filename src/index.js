@@ -3,6 +3,7 @@ import Dynamic from './modules/creatingItems.js';
 import DataClass, {
   cleanList, clearAll, selectAll, clickPlus, newItem,
 } from './modules/variables.js';
+import { insertNewItem } from './modules/insertNewItem.js';
 
 cleanList();
 
@@ -17,23 +18,6 @@ selectAll.addEventListener('click', () => {
   localStorage.setItem('listItem', JSON.stringify(DataClass.dataStructure));
   Dynamic.render();
 });
-///
-const insertNewItem = (event) => {
-  const tecla = event.key;
-  const text = event.target.value;
-  if (tecla === 'Enter') {
-    DataClass.dataStructure.push(
-      {
-        description: text,
-        completed: false,
-        index: DataClass.dataStructure.length,
-      },
-    );
-    newItem.value = '';
-    Dynamic.render();
-    localStorage.setItem('listItem', JSON.stringify(DataClass.dataStructure));
-  }
-};
 
 newItem.addEventListener('keypress', insertNewItem);
 
