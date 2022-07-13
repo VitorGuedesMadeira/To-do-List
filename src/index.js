@@ -1,25 +1,25 @@
 import './style.css';
 import Dynamic from './modules/creatingItems.js';
+import { insertNewItem } from './modules/insertNewItem.js';
 import DataClass, {
   cleanList, clearAll, selectAll, clickPlus, newItem,
 } from './modules/variables.js';
-import { insertNewItem } from './modules/insertNewItem.js';
+import { render } from './modules/render';
+import { setLocalStorage } from './modules/setLocalStorage';
 
 cleanList();
 
 clearAll.addEventListener('click', () => {
   DataClass.dataStructure = DataClass.dataStructure.filter((item) => !item.completed);
-  Dynamic.render();
-  localStorage.setItem('listItem', JSON.stringify(DataClass.dataStructure));
+  render();
+  setLocalStorage();
 });
 
 selectAll.addEventListener('click', () => {
   DataClass.dataStructure = [];
-  localStorage.setItem('listItem', JSON.stringify(DataClass.dataStructure));
-  Dynamic.render();
+  setLocalStorage();
+  render();
 });
-
-newItem.addEventListener('keypress', insertNewItem);
 
 clickPlus.addEventListener('click', () => {
   const { value } = newItem;
@@ -31,8 +31,19 @@ clickPlus.addEventListener('click', () => {
     },
   );
   newItem.value = '';
-  Dynamic.render();
-  localStorage.setItem('listItem', JSON.stringify(DataClass.dataStructure));
+  render();
+  setLocalStorage();
+});
+
+newItem.addEventListener('keypress', () => {
+  const tecla = event.key;
+  const text = event.target.value;
+  if (tecla === 'Enter') {
+    insertNewItem(text);
+    newItem.value = '';
+  }
+  render();
+  setLocalStorage();
 });
 
 window.addEventListener('load', () => { // LOCAL STORAGE
@@ -45,4 +56,4 @@ window.addEventListener('load', () => { // LOCAL STORAGE
   }
 });
 
-Dynamic.render();
+render();
